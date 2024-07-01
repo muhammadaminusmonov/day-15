@@ -12,13 +12,14 @@ def report_recourse(recourse):
 
 
 def check_resources_sufficient(request, recourse):
-    """Checks if the all recourses are enough. Returns True if is enough. If not enough, returns recourse name"""
+    """Checks if the all recourses are enough. Returns True if is enough. If not enough, returns False"""
     ingredients = request["ingredients"]
 
     for key in ingredients:
         if recourse[key] < ingredients[key]:
-            return key
-    return "ok"
+            print(f"Sorry, there is not enough {key}")
+            return False
+    return True
 
 
 def get_coins():
@@ -58,9 +59,7 @@ def game():
             ordered_coffee = MENU[order]
             check_resource_sufficient = check_resources_sufficient(ordered_coffee, resources)
 
-            if check_resource_sufficient != "ok":
-                print(f"Sorry, there is not enough {check_resource_sufficient}")
-            else:
+            if check_resource_sufficient:
                 money = get_coins()
                 cost = ordered_coffee["cost"]
 
