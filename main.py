@@ -43,33 +43,37 @@ def update_resources(coffee, supplies):
         supplies[key] -= coffee["ingredients"][key]
 
 
-should_continue = True
+def game():
+    should_continue = True
 
-while should_continue:
-    order = input("What would you like? (espresso/latte/cappuccino): ").lower()
+    while should_continue:
+        order = input("What would you like? (espresso/latte/cappuccino): ").lower()
 
-    if order == "off":
-        should_continue = False
-    elif order == "report":
-        print(report_recourse(resources))
-    elif order == "espresso" or order == "latte" or order == "cappuccino":
+        if order == "off":
+            should_continue = False
+        elif order == "report":
+            print(report_recourse(resources))
+        elif order == "espresso" or order == "latte" or order == "cappuccino":
 
-        ordered_coffee = MENU[order]
-        check_resource_sufficient = check_resources_sufficient(ordered_coffee, resources)
+            ordered_coffee = MENU[order]
+            check_resource_sufficient = check_resources_sufficient(ordered_coffee, resources)
 
-        if check_resource_sufficient != "ok":
-            print(f"Sorry, there is not enough {check_resource_sufficient}")
-        else:
-            money = get_coins()
-            cost = ordered_coffee["cost"]
-
-            if money < cost:
-                print("Sorry that's not enough money. Money refunded.")
+            if check_resource_sufficient != "ok":
+                print(f"Sorry, there is not enough {check_resource_sufficient}")
             else:
-                change = round(money - ordered_coffee["cost"], 2)
-                print(f"Here is ${change} dollars in change.")
-                update_resources(ordered_coffee, resources)
-                print(f"Here is your {order}. Enjoy!")
+                money = get_coins()
+                cost = ordered_coffee["cost"]
 
-    else:
-        print("Entered wrong variable")
+                if money < cost:
+                    print("Sorry that's not enough money. Money refunded.")
+                else:
+                    change = round(money - ordered_coffee["cost"], 2)
+                    print(f"Here is ${change} dollars in change.")
+                    update_resources(ordered_coffee, resources)
+                    print(f"Here is your {order}. Enjoy!")
+
+        else:
+            print("Entered wrong variable")
+
+
+game()
